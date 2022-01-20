@@ -1,24 +1,39 @@
 // get root element, then append a container div
 const root = document.getElementById("root");
+const bg = create("div", "bg", root);
 const content = create("div", "content", root);
 
 // get all the images and backgrounds
 const backgrounds = {
-    0 : "img/la-ville.jpg",
-}
+    0 : "img/bg1.jpg",
+    1 : "img/bg2.jpg",
+    2 : "img/bg3.jpg"
+};
+
+// get gallery imgs
+const images = {
+    0 : "v1.jpg",
+    1 : "v2.jpg",
+    2 : "v3.jpg",
+    3 : "v4.jpg",
+    4 : "v5.jpg",
+    5 : "v6.jpg",
+    6 : "v7.jpg",
+    7 : "v8.jpg",
+};
 
 buildPage();
 
 // determine what page to build, then build it!
 function buildPage() {
-    // create sticky navigation
-    if (root.className = "index") {
+    navigation();
+    if (root.className == "index") {
         index();
-    } else if (root.className = "recreation") {
+    } else if (root.className == "recreation") {
         // set background
         // create header section
         // create content area (with images)
-    } else if (root.className = "newsevents") {
+    } else if (root.className == "newsevents") {
         // set background
         // create header section
         // create content area (with images)
@@ -28,7 +43,7 @@ function buildPage() {
 
 function index() {
     //background
-    document.body.style.backgroundImage = `url(${backgrounds[0]})`;
+    bg.style.backgroundImage = `url(${backgrounds[0]})`;
 
     // landing header
     indexHeader();
@@ -52,10 +67,21 @@ function index() {
         "Non consectetur a erat nam. Aliquet sagittis id consectetur purus ut faucibus pulvinar. Feugiat vivamus at augue eget.";
     sectionTwoH2.textContent = sectionOneH1.textContent;
     sectionTwoText.textContent = sectionOneText.textContent;
+    
+    const section3 = create("div", "videoWrapper");
+    const section3Video = create("iframe", "video", section3);
+    section3Video.setAttribute("src", "https://www.youtube.com/embed/Yak0aJvrLaQ");
+    section3Video.setAttribute("frameborder", "0");
+    section3Video.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture");
+    section3Video.setAttribute("width", "560");
+    section3Video.setAttribute("height", "315");
+    
+    const testframe = create("iframe", "video", section3);
+    console.log(testframe);
 
     //add main content
     createSection(container, false, [sectionOneH1, sectionOneText]);
-    createSection(container, true, [sectionTwoH2, sectionTwoText]);
+    createSection(container, true, section3); // why does section3 not display?
 
 }
 
@@ -82,6 +108,27 @@ function indexHeader() {
     recLink.textContent = "Recreation";
 }
 
+function navigation() {
+    const nav = create("nav", "navigation", content);
+    const navInner = create("div", "navInner", nav);
+    // index
+    const home = create("a", "nav", navInner);
+    home.setAttribute("href", "index.html");
+    home.textContent = "home";
+    //newsevents
+    const news = create("a", "nav", navInner);
+    news.setAttribute("href", "newsevents.html");
+    news.textContent = "news";
+    // recreation
+    const rec = create("a", "nav", navInner);
+    rec.setAttribute("href", "recreation.html");
+    rec.textContent = "recreation";
+}
+
+function footer() {
+
+}
+
 function createSection(parent, inverted, children) {
     //create page
     const wrapper = inverted ? create("div", "sectionWrapper inverted", parent) : create("div", "sectionWrapper", parent);
@@ -91,7 +138,6 @@ function createSection(parent, inverted, children) {
 
     //add the content
     for (let i = 0; i < children.length; i++) {
-        console.log("added " + children[i].textContent);
         contentSection.appendChild(children[i]);
     }
 }
