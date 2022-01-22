@@ -21,7 +21,17 @@ const images = {
     6 : ["img/v7.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."],
     7 : ["img/v8.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."],
 };
+// some mock text
+const someText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit" +
+"sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Non tellus" +
+"orci ac auctor augue mauris augue neque. Sagittis purus sit amet volutpat" +
+"consequat mauris nunc congue nisi. Vitae ultricies leo integer malesuada nunc" +
+"vel risus commodo viverra. Quam pellentesque nec nam aliquam sem et. Justo" +
+"donec enim diam vulputate. Fames ac turpis egestas integer. Odio euismod " +
+"lacinia at quis risus sed. Suspendisse ultrices gravida dictum fusce ut placerat. " +
+"Non consectetur a erat nam. Aliquet sagittis id consectetur purus ut faucibus pulvinar. Feugiat vivamus at augue eget.";
 
+// build the page
 buildPage();
 
 // determine what page to build, then build it!
@@ -46,8 +56,7 @@ function index() {
     bg.style.backgroundImage = `url(${backgrounds[0]})`;
 
     // landing header
-    indexHeader();
-
+    createHeader("Bienvenue a Montreal", true);
     // create main container
     const container = create("main", "container", content);
 
@@ -57,14 +66,7 @@ function index() {
     const sectionTwoH2 = create("h2", "title");
     const sectionTwoText = create("p", "textContent");
     sectionOneH1.textContent = "Main Page Heading";
-    sectionOneText.textContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit" +
-        "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Non tellus" +
-        "orci ac auctor augue mauris augue neque. Sagittis purus sit amet volutpat" +
-        "consequat mauris nunc congue nisi. Vitae ultricies leo integer malesuada nunc" +
-        "vel risus commodo viverra. Quam pellentesque nec nam aliquam sem et. Justo" +
-        "donec enim diam vulputate. Fames ac turpis egestas integer. Odio euismod " +
-        "lacinia at quis risus sed. Suspendisse ultrices gravida dictum fusce ut placerat. " +
-        "Non consectetur a erat nam. Aliquet sagittis id consectetur purus ut faucibus pulvinar. Feugiat vivamus at augue eget.";
+    sectionOneText.textContent = someText;
     sectionTwoH2.textContent = sectionOneH1.textContent;
     sectionTwoText.textContent = sectionOneText.textContent;
 
@@ -82,7 +84,7 @@ function index() {
     createSection(container, true, [video]);
 }
 
-function indexHeader() {
+function createHeader(t, addSlider) {
     // create header content section
     const section = create("header", "section landing", content);
     const inner = create("div", "inner", section);
@@ -90,9 +92,11 @@ function indexHeader() {
     // landing title
     const title = create("div", "landingTitleWrapper item", inner);
     const titleH1 = create("h1", "landingTitle", title);
-    titleH1.textContent = "Bienvenue a Montreal";
+    titleH1.textContent = t;
 
-    createSlider(inner, [images[0], images[1]]);
+    if (addSlider) {
+        createSlider(inner, [images[0], images[1]]);
+    }
 }
 
 function navigation(top) {
