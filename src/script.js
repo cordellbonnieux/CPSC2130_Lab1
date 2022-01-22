@@ -21,6 +21,23 @@ const images = {
     6 : ["img/v7.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."],
     7 : ["img/v8.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."],
 };
+
+// get spinner imgs
+const spinner = [
+    "img/spin/img1.png",
+    "img/spin/img2.png",
+    "img/spin/img3.png",
+    "img/spin/img4.png",
+    "img/spin/img5.png",
+    "img/spin/img6.png",
+    "img/spin/img7.png",
+    "img/spin/img8.png",
+    "img/spin/img9.png",
+    "img/spin/img10.png",
+    "img/spin/img11.png",
+    "img/spin/img12.png"
+];
+
 // some mock text
 const someText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit" +
 "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Non tellus" +
@@ -42,9 +59,7 @@ function buildPage() {
     } else if (root.className == "recreation") {
         recreation();
     } else if (root.className == "newsevents") {
-        // set background
-        // create header section
-        // create content area (with images)
+        newsevents();
     }
     navigation(false);
 }
@@ -58,14 +73,11 @@ function index() {
     const container = create("main", "container", content);
 
     // Create some mock content
-    const sectionOneH1 = create("h1", "title");
-    const sectionOneText = create("p", "textContent");
-    const sectionTwoH2 = create("h2", "title");
-    const sectionTwoText = create("p", "textContent");
+    const section1 = create("div", "left");
+    const sectionOneH1 = create("h1", "title", section1);
+    const sectionOneText = create("p", "textContent", section1);
     sectionOneH1.textContent = "Main Page Heading";
     sectionOneText.textContent = someText;
-    sectionTwoH2.textContent = sectionOneH1.textContent;
-    sectionTwoText.textContent = sectionOneText.textContent;
 
     // get video div
     const node = document.getElementById("vid");
@@ -73,17 +85,15 @@ function index() {
     const video = node.cloneNode(true);
     // remove original from dom
     node.parentNode.removeChild(node);
-    // adjust size to parent
-    //video.style = "min-height:300px; width:auto;";
 
     //add main content
-    createSection(container, false, [sectionOneH1, sectionOneText]);
+    createSection(container, false, [section1]);
     createSection(container, true, [video]);
 }
 
 function recreation() {
     //background
-    bg.style.backgroundImage = `url(${backgrounds[1]})`;
+    bg.style.backgroundImage = `url(${backgrounds[2]})`;
     // header
     createHeader("Recreation", false);
     // create main container
@@ -97,24 +107,79 @@ function recreation() {
 
     //section1
     const section1 = create("div", "section1Box1 flex");
-    const section1left = create("div", "half", section1);
+    const section1left = create("div", "half left", section1);
     const section1right = create("div", "half", section1);
     create("img", "galleryImg", section1right).setAttribute("src", images[5][0]);
     section1left.appendChild(h2.cloneNode(true));
     section1left.appendChild(text.cloneNode(true));
-    const section2 = create("div", "section2");
+
+    // get music div
+    const node = document.getElementById("mus");
+    // deep clone
+    const music = node.cloneNode(true);
+    // remove original from dom
+    node.parentNode.removeChild(node);
+
+    //section4
+    const section3 = create("div", "section4");
+    section3.appendChild(h2.cloneNode(true));
+    section3.appendChild(text.cloneNode(true));
+
+    //section4
+    const section4 = create("div", "section3");
     for (let i = 0; i < Object.keys(images).length; i++) {
-        const img = create("img", "galleryImg half", section2);
+        const img = create("img", "galleryImg half", section4);
         img.setAttribute("src", images[i][0]);
     }
 
     // add sections
     createSection(container, false, [section1]);
-    createSection(container, true, [section2]);
-    /*
+    createSection(container, true, [music]);
     createSection(container, false, [section3]);
     createSection(container, true, [section4]);
-    */
+}
+
+function newsevents() {
+    //background
+    bg.style.backgroundImage = `url(${backgrounds[1]})`;
+    // header
+    createHeader("News Events", false);
+    // create main container
+    const container = create("main", "container", content);
+
+    //section 2
+    const section2 = create("div", "spinner");
+    const section2Inner = create("div", "spinnerInner", section2);
+    let imgs = [];
+    for (let i = 0; i < spinner.length; i++) {
+        const img = create("img", "spinnerImg", section2Inner);
+        img.setAttribute("src", spinner[i]);
+        imgs.push(img);
+    }
+    const section2Controls = create("div", "spinnerControls", section2Inner);
+    const back = create("input", "back btn", section2Controls);
+    back.type = "button";
+    back.value = "<";
+    const next = create("input", "next btn", section2Controls);
+    next.type = "button";
+    next.value = ">";
+    let current = 0;
+    imgs.forEach((img) => {img.style.display = "none"});
+    imgs[current].style.display = "inline";
+    back.onclick = () => {
+        let last = current;
+        current = (current - 1 >= 0) ? current -1 : imgs.length - 1;
+        imgs[last].style.display = "none";
+        imgs[current].style.display = "inline";
+    };
+    next.onclick = () => {
+        let last = current;
+        current = (current + 1) % imgs.length;
+        imgs[last].style.display = "none";
+        imgs[current].style.display = "inline";
+    };
+
+    createSection(container, true, [section2]);
 }
 
 function createHeader(t, addSlider) {
