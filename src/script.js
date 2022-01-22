@@ -12,8 +12,8 @@ const backgrounds = {
 
 // get gallery imgs
 const images = {
-    0 : ["img/v1.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit...", "recreation.html"],
-    1 : ["img/v2.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit...", "newsevents.html"],
+    0 : ["img/v1.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit..", "recreation.html"],
+    1 : ["img/v2.jpg", "Suspendisse ultrices gravida dictum fusce ut placerat..", "newsevents.html"],
     2 : ["img/v3.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."],
     3 : ["img/v4.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."],
     4 : ["img/v5.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."],
@@ -26,7 +26,7 @@ buildPage();
 
 // determine what page to build, then build it!
 function buildPage() {
-    navigation();
+    navigation(true);
     if (root.className == "index") {
         index();
     } else if (root.className == "recreation") {
@@ -38,7 +38,7 @@ function buildPage() {
         // create header section
         // create content area (with images)
     }
-    //add the footer
+    navigation(false);
 }
 
 function index() {
@@ -93,19 +93,10 @@ function indexHeader() {
     titleH1.textContent = "Bienvenue a Montreal";
 
     createSlider(inner, [images[0], images[1]]);
-
-    /* create first call to action section
-    const news = create("div", "callToAction item", inner);
-    const newsLink = create ("a", "newsLink", news);
-    newsLink.setAttribute("href", "newsevents.html");
-    newsLink.textContent = "News Events >>";
-    */
-
-
 }
 
-function navigation() {
-    const nav = create("nav", "navigation", content);
+function navigation(top) {
+    const nav = top ? create("nav", "navigation", content) : create("footer", "footer", content);
     const navInner = create("div", "navInner", nav);
     // index
     const home = create("a", "nav", navInner);
@@ -121,10 +112,6 @@ function navigation() {
     rec.textContent = "recreation";
 }
 
-function footer() {
-
-}
-
 function createSlider(parent, imgs) {
     const wrapper = create("div", "sliderWrapper", parent);
     const inner = create("div", "sliderInner", wrapper);
@@ -133,12 +120,12 @@ function createSlider(parent, imgs) {
         const slide = createSlide(imgs[i][0], imgs[i][1], imgs[i][2], i, inner);
         const radio = create("input", `radio${i}`, controls);
         radio.type = "radio";
-        radio.name = "slider";
-        radio.addEventListener("selected", displaySlide(radio));
+        radio.name = "slides";
+        radio.onclick = function() { displaySlide(this, i, slide) };
         if (i != 0) {
             slide.style.display = "none";
         } else {
-            radio.checked.true;
+            radio.checked = true;
         }
     }
 }
@@ -164,13 +151,17 @@ function createSlide(image, txt, lnk, num, parent){
     return wrapper;
 }
 
-function displaySlide(slide) {
-    console.log("clicked");
-    const slides = document.querySelectorAll("input[name='slides']");
-    for (const s of slides) {
-        s.style.display = "none";
+function displaySlide(btn, num, slide) {
+    if (btn.checked) {
+        const slides = document.querySelectorAll(".slide");
+        for (const s of slides) {
+            s.style.display = "none";
+        }
+        slide.style.display = "inline-block";
+        for (const n of slide.childNodes) {
+            n.style.display = "inline-block";
+        }
     }
-    slide.style.display = "block";
 }
 
 function createSection(parent, inverted, children) {
