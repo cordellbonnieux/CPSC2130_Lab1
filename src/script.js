@@ -12,14 +12,14 @@ const backgrounds = {
 
 // get gallery imgs
 const images = {
-    0 : "v1.jpg",
-    1 : "v2.jpg",
-    2 : "v3.jpg",
-    3 : "v4.jpg",
-    4 : "v5.jpg",
-    5 : "v6.jpg",
-    6 : "v7.jpg",
-    7 : "v8.jpg",
+    0 : ["img/v1.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit...", "recreation.html"],
+    1 : ["img/v2.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit...", "newsevents.html"],
+    2 : ["img/v3.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."],
+    3 : ["img/v4.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."],
+    4 : ["img/v5.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."],
+    5 : ["img/v6.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."],
+    6 : ["img/v7.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."],
+    7 : ["img/v8.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."],
 };
 
 buildPage();
@@ -67,22 +67,19 @@ function index() {
         "Non consectetur a erat nam. Aliquet sagittis id consectetur purus ut faucibus pulvinar. Feugiat vivamus at augue eget.";
     sectionTwoH2.textContent = sectionOneH1.textContent;
     sectionTwoText.textContent = sectionOneText.textContent;
-    
-    const section3 = create("div", "videoWrapper");
-    const section3Video = create("iframe", "video", section3);
-    section3Video.setAttribute("src", "https://www.youtube.com/embed/Yak0aJvrLaQ");
-    section3Video.setAttribute("frameborder", "0");
-    section3Video.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture");
-    section3Video.setAttribute("width", "560");
-    section3Video.setAttribute("height", "315");
-    
-    const testframe = create("iframe", "video", section3);
-    console.log(testframe);
+
+    // get video div
+    const node = document.getElementById("vid");
+    // deep clone
+    const video = node.cloneNode(true);
+    // remove original from dom
+    node.parentNode.removeChild(node);
+    // adjust size to parent
+    //video.style = "min-height:300px; width:auto;";
 
     //add main content
     createSection(container, false, [sectionOneH1, sectionOneText]);
-    createSection(container, true, section3); // why does section3 not display?
-
+    createSection(container, true, [video]);
 }
 
 function indexHeader() {
@@ -95,17 +92,16 @@ function indexHeader() {
     const titleH1 = create("h1", "landingTitle", title);
     titleH1.textContent = "Bienvenue a Montreal";
 
-    // create first call to action section
+    createSlider(inner, [images[0], images[1]]);
+
+    /* create first call to action section
     const news = create("div", "callToAction item", inner);
     const newsLink = create ("a", "newsLink", news);
     newsLink.setAttribute("href", "newsevents.html");
-    newsLink.textContent = "News Events";
+    newsLink.textContent = "News Events >>";
+    */
 
-    // create second call to action section
-    const rec = create("div", "callToAction item", inner);
-    const recLink = create("a", "recLink", rec);
-    recLink.setAttribute("href", "recreation.html");
-    recLink.textContent = "Recreation";
+
 }
 
 function navigation() {
@@ -127,6 +123,54 @@ function navigation() {
 
 function footer() {
 
+}
+
+function createSlider(parent, imgs) {
+    const wrapper = create("div", "sliderWrapper", parent);
+    const inner = create("div", "sliderInner", wrapper);
+    const controls = create("div", "sliderControls", wrapper);
+    for (let i = 0; i < imgs.length; i++) {
+        const slide = createSlide(imgs[i][0], imgs[i][1], imgs[i][2], i, inner);
+        const radio = create("input", `radio${i}`, controls);
+        radio.type = "radio";
+        radio.name = "slider";
+        radio.addEventListener("selected", displaySlide(radio));
+        if (i != 0) {
+            slide.style.display = "none";
+        } else {
+            radio.checked.true;
+        }
+    }
+}
+
+function createSlide(image, txt, lnk, num, parent){
+    // container
+    const wrapper = create("div", `slide slide${num}`, parent);
+    wrapper.id = `slide${num}`;
+    // image
+    const img = create("img", "slideImg", wrapper);
+    img.setAttribute("src", image);
+    // call to action container
+    const callToAction = create("div", "slide callToAction item", wrapper);
+    //text
+    const text = create("h3", "slideText", callToAction);
+    text.textContent = txt;
+    //link
+    const link = create("a", "link", callToAction);
+    link.setAttribute("href", lnk);
+    link.textContent = "Read More >>";
+
+    //return the slide
+    return wrapper;
+}
+
+function displaySlide(slide) {
+    console.log("clicked");
+    const slides = document.querySelectorAll("input[name='slides']");
+    for (const s of slides) {
+        s.style.display = "none";
+    }
+    slide.style.display = "block";
 }
 
 function createSection(parent, inverted, children) {
