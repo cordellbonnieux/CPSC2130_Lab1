@@ -40,9 +40,7 @@ function buildPage() {
     if (root.className == "index") {
         index();
     } else if (root.className == "recreation") {
-        // set background
-        // create header section
-        // create content area (with images)
+        recreation();
     } else if (root.className == "newsevents") {
         // set background
         // create header section
@@ -54,8 +52,7 @@ function buildPage() {
 function index() {
     //background
     bg.style.backgroundImage = `url(${backgrounds[0]})`;
-
-    // landing header
+    // header
     createHeader("Bienvenue a Montreal", true);
     // create main container
     const container = create("main", "container", content);
@@ -82,6 +79,42 @@ function index() {
     //add main content
     createSection(container, false, [sectionOneH1, sectionOneText]);
     createSection(container, true, [video]);
+}
+
+function recreation() {
+    //background
+    bg.style.backgroundImage = `url(${backgrounds[1]})`;
+    // header
+    createHeader("Recreation", false);
+    // create main container
+    const container = create("main", "container", content);
+
+    //text
+    const h2 = create("h2", "title",);
+    h2.textContent = images[0][1];
+    const text = create("p", "text");
+    text.textContent = someText;
+
+    //section1
+    const section1 = create("div", "section1Box1 flex");
+    const section1left = create("div", "half", section1);
+    const section1right = create("div", "half", section1);
+    create("img", "galleryImg", section1right).setAttribute("src", images[5][0]);
+    section1left.appendChild(h2.cloneNode(true));
+    section1left.appendChild(text.cloneNode(true));
+    const section2 = create("div", "section2");
+    for (let i = 0; i < Object.keys(images).length; i++) {
+        const img = create("img", "galleryImg half", section2);
+        img.setAttribute("src", images[i][0]);
+    }
+
+    // add sections
+    createSection(container, false, [section1]);
+    createSection(container, true, [section2]);
+    /*
+    createSection(container, false, [section3]);
+    createSection(container, true, [section4]);
+    */
 }
 
 function createHeader(t, addSlider) {
