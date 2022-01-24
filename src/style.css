@@ -258,6 +258,8 @@ body {
     background-position: center;
     background-size:cover;
     border:2px #fff solid;
+    /* offset-x | offset-y | blur-radius | color */
+    box-shadow: 5px 5px 5px black;
 }
 
 .btn {
@@ -269,6 +271,7 @@ body {
     color:#fff;
     border:2px solid #fff;
     transition: 1s;
+    cursor:pointer;
 }
 
 .btn:hover {
