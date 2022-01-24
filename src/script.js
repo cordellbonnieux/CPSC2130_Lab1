@@ -7,7 +7,9 @@ const content = create("div", "content", root);
 const backgrounds = {
     0 : "img/bg1.jpg",
     1 : "img/bg2.jpg",
-    2 : "img/bg3.jpg"
+    2 : "img/bg3.jpg",
+    3 : "img/bg4.jpg",
+    4 : "img/bg5.jpg"
 };
 
 // get gallery imgs
@@ -149,6 +151,8 @@ function newsevents() {
 
     //section 2
     const section2 = create("div", "spinner");
+    const section2Title = create("h2", "title", section2);
+    section2Title.textContent = "Have a cafe in Montreal";
     const section2Inner = create("div", "spinnerInner", section2);
     let imgs = [];
     for (let i = 0; i < spinner.length; i++) {
@@ -156,7 +160,7 @@ function newsevents() {
         img.setAttribute("src", spinner[i]);
         imgs.push(img);
     }
-    const section2Controls = create("div", "spinnerControls", section2Inner);
+    const section2Controls = create("div", "spinnerControls", section2);
     const back = create("input", "back btn", section2Controls);
     back.type = "button";
     back.value = "<";

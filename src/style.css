@@ -105,10 +105,6 @@ body {
     justify-content: center;
 }
 
-.title {
-    
-}
-
 .landingTitle {
     font-family: 'Lobster', cursive;
     font-size:4em;
@@ -167,10 +163,6 @@ body {
     opacity: 0.8;
 }
 
-.slideImg:hover {
-    
-}
-
 .slideText {
     font-size:2em;
 }
@@ -203,6 +195,29 @@ body {
 .galleryImg {
     max-width:90%;
     margin:15% 0 0 10%;
+}
+
+.spinnerInner {
+    background:url("../img/bg4.jpg");
+    background-position: center;
+    background-size:cover;
+    border:2px #fff solid;
+}
+
+.btn {
+    margin:10px;
+    padding:5px 10px;
+    font-size:1.2em;
+    font-weight:700;
+    background-color:transparent;
+    color:#fff;
+    border:2px solid #fff;
+    transition: 1s;
+}
+
+.btn:hover {
+    background-color:#fff;
+    color:#000;
 }
 
 @media screen and (max-width: 600px) {
