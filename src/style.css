@@ -53,10 +53,6 @@ body {
     top:0;
 }
 
-.footer {
-
-}
-
 .navInner {
     text-align:center;
     margin:25px auto;
@@ -70,6 +66,10 @@ body {
     color:#fff;
     font-family: 'Lobster', cursive;
     font-size:1.3em;
+}
+
+.nav:hover {
+    text-decoration: underline;
 }
 
 .container {
@@ -94,6 +94,13 @@ body {
     margin:0 auto;
     max-width:600px;
     padding:25px;
+    animation-name:fadeIn;
+    animation-duration: 4s;
+}
+
+@keyframes fadeIn {
+    0% {opacity:0%;}
+    100% {opacity:100%;}
 }
 
 .section.landing {
