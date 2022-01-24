@@ -149,6 +149,20 @@ function newsevents() {
     // create main container
     const container = create("main", "container", content);
 
+    // section 1
+    const section1 = create("div", "newsHeadlines flex");
+    const section1ele1 = create("div", "half left", section1);
+    create("h2","",section1ele1).textContent = images[0][1];
+    create("p", "", section1ele1).textContent = someText;
+    const section1ele2 = create("img", "galleryImg half", section1);
+    section1ele2.setAttribute("src",images[6][0]);
+    const section1ele3 = create("h2", "newsText", section1);
+    section1ele3.textContent = images[0][1];
+    const section1ele4 = create("div", "half left", section1);
+    create("p", "", section1ele4).textContent = someText;
+    const section1ele5 = create("div", "half left", section1);
+    create("p", "", section1ele5).textContent = someText;
+
     //section 2
     const section2 = create("div", "spinner");
     const section2Title = create("h2", "title", section2);
@@ -183,6 +197,7 @@ function newsevents() {
         imgs[current].style.display = "inline";
     };
 
+    createSection(container, false, [section1]);
     createSection(container, true, [section2]);
 }
 
